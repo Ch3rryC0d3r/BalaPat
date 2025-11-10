@@ -20,7 +20,7 @@ const data = {
   "Partner": {"Steamodded (>=1.0.0~BETA-0323b)":"REQUIRE", "Lovely (>=0.6.0)":"REQUIRE", },
   "Pokermon": {"Steamodded (>=1.0.0~BETA-0711a)":"REQUIRE", "Lovely (>=0.7.0)":"REQUIRE", },
   "Steammodded": {"Thunderstore-lovely-0.7.1":"REQUIRE", },
-  "Sticky Fingers": {"Steamodded (>=1.*)":"REQUIRE", "Lovely (>=0.6)":"REQUIRE", },
+  "Sticky Fingers": {"Steamodded (>=1.*)":"REQUIRE", "Lovely (>=0.6.0)":"REQUIRE", },
   "Too Many Jokers": {"Steamodded (>=1.0.0~BETA-0715a)":"REQUIRE", },
   "ZokersModMenu": {"Steamodded-Steamodded-0.9.8":"REQUIRE", },
 
