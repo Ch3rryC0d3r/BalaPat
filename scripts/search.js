@@ -41,15 +41,46 @@ function init() {
 
   function highlightIntersection(a, b) {
     clearHighlights();
-    if (!a || !b) return;
+    if (!a && !b) return;
 
-    const cell =
-      document.querySelector(`td[data-a="${a}"][data-b="${b}"]`) ||
-      document.querySelector(`td[data-a="${b}"][data-b="${a}"]`);
+    // highlight row
+    if (a) {
+      // highlight all cells in row a (using data attribute which is reliable)
+      const rowCells = document.querySelectorAll(`td[data-a="${a}"]`);
+      rowCells.forEach(el => el.classList.add("highlight"));
+      
+      // highlight row header by finding the one that matches the data-a value
+      const rowHeader = Array.from(document.querySelectorAll('.rowHeader')).find(el => {
+        return el.textContent.trim() === a;
+      });
+      if (rowHeader) {
+        rowHeader.classList.add("highlight");
+        rowHeader.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
 
-    if (cell) {
-      cell.classList.add("highlight");
-      cell.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+    // highlight column
+    if (b) {
+      // highlight all cells in column b (using data attribute which is reliable)
+      const colCells = document.querySelectorAll(`td[data-b="${b}"]`);
+      colCells.forEach(el => el.classList.add("highlight"));
+      
+      // highlight column header
+      const colHeader = Array.from(document.querySelectorAll('th')).find(el => {
+        return el.textContent.trim() === b && !el.classList.contains('rowHeader');
+      });
+      if (colHeader) {
+        colHeader.classList.add("highlight");
+        colHeader.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+      }
+    }
+
+    // if both exist, scroll to intersection
+    if (a && b) {
+      const cell = document.querySelector(`td[data-a="${a}"][data-b="${b}"]`);
+      if (cell) {
+        cell.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" });
+      }
     }
   }
 
@@ -63,8 +94,21 @@ function init() {
       return mods[idx - 1];
     }
 
-    // case-insensitive partial match - return first alphabetical match
-    const lowerInput = input.trim().toLowerCase().replace(/[^\w\s]/g, '');
+    const trimmedInput = input.trim();
+    const lowerInput = trimmedInput.toLowerCase().replace(/[^\w\s]/g, '');
+    
+    // first try exact case-insensitive match
+    const exactMatch = mods.find(mod => mod.toLowerCase() === trimmedInput.toLowerCase());
+    if (exactMatch) return exactMatch;
+    
+    // then try exact match on cleaned version
+    const cleanedExactMatch = mods.find(mod => {
+      const cleanMod = mod.toLowerCase().replace(/[^\w\s]/g, '');
+      return cleanMod === lowerInput;
+    });
+    if (cleanedExactMatch) return cleanedExactMatch;
+    
+    // finally fall back to partial match - return first alphabetical match
     const matches = mods.filter(mod => {
       const cleanMod = mod.toLowerCase().replace(/[^\w\s]/g, '');
       return cleanMod.includes(lowerInput);
