@@ -23,5 +23,5 @@ const data = {
   "Sticky Fingers": {"Steamodded (>=1.*)":"REQUIRE", "Lovely (>=0.6.0)":"REQUIRE", },
   "Too Many Jokers": {"Steamodded (>=1.0.0~BETA-0715a)":"REQUIRE", },
   "ZokersModMenu": {"Steamodded-Steamodded-0.9.8":"REQUIRE", },
-
+  "Victin's Collection": {"Steamodded (>=1.*~)":"REQUIRE", "Lovely (>=0.7.*~)":"REQUIRE"}
 };
